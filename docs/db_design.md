@@ -7,6 +7,28 @@
 | username | VARCHAR(50) | UNIQUE |
 | password_hash | VARCHAR(200) | ハッシュ化して保存 |
 
+## Playersテーブル
+| カラム | 型 | 備考 |
+|--------|----|------|
+| id | INTEGER | PK |
+| team_id | INTEGER | FK：Teams.id |
+| fullname | VARCHAR(100) | 選手名 |
+| firstname | VARCHAR(100) | 名 |
+| lasttname | VARCHAR(100) | 氏 |
+| is_active | BOOLEAN | 現役フラグ |
+
+## Teamsテーブル
+| カラム | 型 | 備考 |
+|--------|----|------|
+| id | INTEGER | PK |
+| fullname | VARCHAR(100) | 選手名 |
+| firstname | VARCHAR(100) | チーム名 |
+| nickname | VARCHAR(100) | ニックネーム |
+| city | VARCHAR(100) | 拠点 |
+| state | VARCHAR(100) | 州 |
+| founded | VARCHAR(4) | 設立年 |
+
+
 ## FavoritePlayersテーブル
 | カラム | 型 | 備考 |
 |--------|----|------|
@@ -14,7 +36,8 @@
 | user_id | INTEGER | FK: Users.id |
 | player_id | INTEGER | NBA APIの選手ID |
 | player_name | VARCHAR(100) | 選手名 |
-| team | VARCHAR(50) | チーム名 |
+| team_id | INTEGER | チームID |
+| team_name | VARCHAR(50) | チーム名 |
 | position | VARCHAR(10) | ポジション |
 
 ## PlayerStatsテーブル（スタッツをAPIから呼び出した際に登録するテーブル）
