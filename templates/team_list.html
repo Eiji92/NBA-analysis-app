@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}チーム一覧{% endblock%}
+{% block content %}
+
+
+<div class="container my-5">
+    <div class="text-left mb-4">
+        <h2>チーム一覧</h2>
+    </div>
+    <div class="row row-cols-3 g-4">
+        {% for team in teams %}
+        <div class="col text-center">
+            <div class="card">
+                <a href="{{ url_for('player_list', team_id=team.id) }}" class="stretched-link"></a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ team.nickname }}</h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
