@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}選手一覧{% endblock%}
+{% block content %}
+
+
+<div class="container my-5">
+    <div class="d-flex align-items-center mb-5">
+        <h2>選手一覧</h2>
+        <div class="col col-md-2 text-center ms-4 ">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{teams.nickname}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-3 g-4">
+        {% for player in players %}
+        <div class="col text-center">
+            <div class="card">
+                <div class="card-body d-flex justify-content-between">
+                    <h5 class="card-title">{{ player.full_name }}</h5>
+                    <button type="button" class="favorite-btn btn btn-light">☆</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        document.querySelectorAll('.favorite-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // ボタンの色とテキストを切り替え
+                if(btn.textContent === "☆") {
+                    btn.textContent = "⭐";
+                    btn.style.background = "black";
+                } else {
+                    btn.textContent = "☆";
+                    btn.style.background = "";
+                }
+            });
+        });
+    </script>
+</div>
+{% endblock %}
+
