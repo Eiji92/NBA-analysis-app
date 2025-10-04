@@ -1,0 +1,38 @@
+<!--継承先に以下を書いて、base.htmlから取得 -->
+{% extends 'base.html' %}
+{% block title %}ログイン{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <div class="card rounded-3">
+                <div class="card-body">
+                    <h3 class="card-title text-center">NBA Stats Analyzer</h3>
+                    {% if msg %}
+                    <div class="alert alert-danger text-center" role="alert">
+                         {{ msg }}
+                    </div>
+                    {% endif %}
+                    <form method="POST">
+                        <div class="mb-4">
+                            <label for="username" class="form-label">ユーザー名</label>
+                            <input type="text" name="username" id="username" class="form-control" placeholder="ユーザー名を入力">
+                        </div>
+                         <div class="mb-4">
+                            <label for="password" class="form-label">パスワード</label>
+                            <input type="text" name="password" id="password" class="form-control" placeholder="パスワードを入力">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mb-4">ログイン</button>
+                    </form>
+                    <div class="text-center">
+                    <a href="signup" class="text-center">新規登録</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- postメソッドを使うことでFlask側にデータを渡す -->
+<!-- inputのnameがmyapp.pyと連携しているため、名称を合わせる -->
+
+{% endblock %}
