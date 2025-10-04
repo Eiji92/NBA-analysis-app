@@ -4,7 +4,7 @@ from sqlalchemy import asc
 from flask_migrate import Migrate 
 import pytz
 from datetime import datetime
-
+from nba_api.stats.endpoints import commonplayerinfo
 
 app = Flask(__name__)
 
@@ -30,6 +30,15 @@ class Team(db.Model):
     tokyo_timzone = pytz.timezone('Asia/Tokyo')
     created_at = db.Column(db.DateTime,nullable=False,default=datetime.now(tokyo_timzone)) # 作成日時
 
+class Player(db.Model):
+    id = db.Column(db.Integer, primary_key=True)             # id
+    team_id = db.Column(db.Integer,db.ForeignKey('team.id'), nullable=False)    # チームid
+    full_name = db.Column(db.String(100), nullable=False)  # フルネーム
+    first_name = db.Column(db.String(100), nullable=False)      # 名
+    last_name = db.Column(db.String(100), nullable=False)          # 氏
+    is_active = db.Column(db.Boolean, nullable=False)         # 現役
+    tokyo_timzone = pytz.timezone('Asia/Tokyo')
+    created_at = db.Column(db.DateTime,nullable=False,default=datetime.now(tokyo_timzone)) # 作成日時
 
 migrate = Migrate(app, db) 
 
@@ -45,4 +54,20 @@ def team_list():
 
 @app.route("/team/<int:team_id>")
 def player_list(team_id):
-    return print("")
+    players = Player.query.filter(Player.team_id == team_id).order_by(asc(Player.full_name)).all()
+    teams = Team.query.get(team_id)
+    # players_info = []
+
+    # for player in players:
+    #     try:
+    #         info = commonplayerinfo.CommonPlayerInfo(player_id=player.id).get_normalized_dict()
+    #         position = info['CommonPlayerInfo'][0].get('POSITION', 'N/A')
+    #     except Exception as e:
+    #         print(f"API取得失敗: {player.full_name}, error: {e}")
+
+    #     players_info.append({
+    #         "id":player.id,
+    #         "full_name":player.full_name,
+    #         "position":position
+    #     })
+    return render_template("player_list.html", players=players, teams=teams)
